@@ -8,6 +8,7 @@ var browserify = require('browserify');
 var reactify = require('reactify');
 var source = require('vinyl-source-stream');
 var concat = require('gulp-concat');
+var lint = require('gulp-eslint');
 
 
 //configuration values
@@ -76,5 +77,12 @@ gulp.task('watch', function(){
 
 });
 
+//Create a link task
+gulp.task('lint', ()=>{
+    return gulp.src(config.paths.js)
+        .pipe(lint({config: '.eslintrc.json'}))
+        .pipe(lint.format());
+});
+
 //default task
-gulp.task('default', ['html', 'js', 'css', 'open', 'watch']);
+gulp.task('default', ['html', 'js', 'css', 'lint', 'open', 'watch']);
