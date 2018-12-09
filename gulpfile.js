@@ -28,7 +28,7 @@ var config = {
 }
 
 //launch a local server for developement.
-gulp.task('conn', function(){
+gulp.task('conn', ()=>{
     conn.server({
         root: ['dist'],
         port: config.port,
@@ -38,7 +38,7 @@ gulp.task('conn', function(){
 });
 
 //open the url on the server.
-gulp.task('open',['conn'], function(){
+gulp.task('open',['conn'], ()=>{
     gulp.src('dist/index.html')
     .pipe(open({
         uri: config.baseUr + ':' + config.port + '/'
@@ -46,14 +46,14 @@ gulp.task('open',['conn'], function(){
 });
 
 //copy html to dist
-gulp.task('html', function(){
+gulp.task('html', ()=>{
     gulp.src(config.paths.html)
         .pipe(gulp.dest(config.paths.dist))
         .pipe(conn.reload());
 });
 
 //transform jsx to js
-gulp.task('js', function(){
+gulp.task('js', ()=>{
     browserify(config.paths.indexJs)
         .transform(reactify)
         .bundle()
@@ -64,14 +64,14 @@ gulp.task('js', function(){
 });
 
 //manage our css
-gulp.task('css', function(){
+gulp.task('css', ()=>{
     gulp.src(config.paths.css)
         .pipe(concat('bundle.css'))
         .pipe(gulp.dest(config.paths.dist + '/css'))
 });
 
 //watch the file and reload
-gulp.task('watch', function(){
+gulp.task('watch', ()=>{
     gulp.watch(config.paths.html, ['html']);
     gulp.watch(config.paths.js, ['js']);
 
